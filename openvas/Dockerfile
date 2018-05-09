@@ -27,12 +27,20 @@ RUN apk add --no-cache 	openvas-manager \
 			openvas-scanner \
 			greenbone-security-assistant \ 
 			python2 \
-			redis 
-RUN sed  -i -e "s/# \(unix.*\)/\1/" /etc/redis.conf && sed -i -e "s/port\ 6379/port\ 0/g" /etc/redis.conf
-RUN sed -i -e "s/127\.0\.0\.1/0\.0\.0\.0/g" /etc/conf.d/gsad
-RUN mkdir -p /run/openrc && touch /run/openrc/softlevel
-RUN greenbone-nvt-sync 
-RUN greenbone-scapdata-sync 
-RUN greenbone-certdata-sync
+			redis \
+			rpm \
+			alien \
+			openssh-keygen \
+			alien \
+			
+RUN 	sed  -i -e "s/# \(unix.*\)/\1/" /etc/redis.conf && sed -i -e "s/port\ 6379/port\ 0/g" /etc/redis.conf && \
+	sed -i -e 's/MANAGER_LISTEN=.*/MANAGER_LISTEN="--listen=0.0.0.0"/g' /etc/conf.d/openvasmd && \
+	sed -i -e "s/127\.0\.0\.1/0\.0\.0\.0/g" /etc/conf.d/gsad
+
+#RUN mkdir -p /run/openrc && touch /run/openrc/softlevel
+
+RUN greenbone-nvt-sync && \
+    greenbone-scapdata-sync && \
+    greenbone-certdata-sync
 ADD run.sh /run.sh
 ENTRYPOINT sh $@
