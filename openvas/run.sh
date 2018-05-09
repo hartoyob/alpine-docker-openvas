@@ -8,4 +8,4 @@ rc-service gsad start
 openvasmd --rebuild --progress
 openvasmd --create-user=admin --role=Admin
 
-tail -F /var/log/openvas/*
+#tail -F /var/log/openvas/*
