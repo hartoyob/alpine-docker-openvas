@@ -40,4 +40,8 @@ RUN greenbone-nvt-sync && \
     greenbone-scapdata-sync && \
     greenbone-certdata-sync
 ADD run.sh /run.sh
+
+EXPOSE 9390
+EXPOSE 9392
+
 ENTRYPOINT /run.sh $@
