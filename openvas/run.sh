@@ -7,5 +7,5 @@ rc-service openvassd start
 rc-service gsad start
 openvasmd --rebuild --progress
 openvasmd --create-user=admin --role=Admin
-
-#tail -F /var/log/openvas/*
+openvasmd --user=admin --new-password=openvas2018
+tail -F /var/log/openvas/*
